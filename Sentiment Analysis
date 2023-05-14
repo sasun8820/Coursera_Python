@@ -1,0 +1,129 @@
+#1
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+
+def strip_punctuation(x):
+    for a in punctuation_chars:
+        x = x.replace(a, "")
+    return x
+
+
+#2 
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+# list of positive words to use
+positive_words = []
+
+with open("positive_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            positive_words.append(lin.strip())
+
+def strip_punctuation(x):
+    for a in punctuation_chars:
+        x = x.replace(a, "")
+    return x
+
+def get_pos(sentence):
+    sentence = sentence.lower()
+    sentence = strip_punctuation(sentence)
+    list_word = sentence.split()
+    count = 0 
+    for word in list_word: 
+        for positiveword in positive_words:
+            if word == positiveword:
+                count+=1
+    return count
+
+
+
+#3 
+
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+
+negative_words = []
+with open("negative_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            negative_words.append(lin.strip())
+
+def strip_punctuation(x):
+    for a in punctuation_chars:
+        x = x.replace(a, "")
+    return x
+
+def get_neg(sentence):
+    sentence = sentence.lower()
+    sentence = strip_punctuation(sentence)
+    list_word = sentence.split()
+    
+    count = 0 
+    for word in list_word: 
+        for negativeword in negative_words:
+            if word == negativeword:
+                count+=1
+    return count
+
+
+#4 
+
+punctuation_chars = ["'", '"', ",", ".", "!", ":", ";", '#', '@']
+# lists of words to use
+def strip_punctuation(x):
+    for a in punctuation_chars:
+        x = x.replace(a, "")
+    return x
+
+def get_pos(sentence):
+    sentence = sentence.lower()
+    sentence = strip_punctuation(sentence)
+    list_word = sentence.split()
+    count = 0 
+    for word in list_word: 
+        for positiveword in positive_words:
+            if word == positiveword:
+                count+=1
+    return count
+
+def get_neg(sentence):
+    sentence = sentence.lower()
+    sentence = strip_punctuation(sentence)
+    list_word = sentence.split()
+    
+    count = 0 
+    for word in list_word: 
+        for negativeword in negative_words:
+            if word == negativeword:
+                count+=1
+    return count
+
+positive_words = []
+with open("positive_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            positive_words.append(lin.strip())
+
+
+negative_words = []
+with open("negative_words.txt") as pos_f:
+    for lin in pos_f:
+        if lin[0] != ';' and lin[0] != '\n':
+            negative_words.append(lin.strip())
+            
+fileref=open("project_twitter_data.csv","r")
+data = fileref.readlines()
+
+outfile = open("resulting_data.csv","w")
+outfile.write("Number of Retweets, Number of Replies, Positive Score, Negative Score, Net Score")
+outfile.write("\n")
+
+for i in data[1:]:
+    res_row=""
+    splt=i.strip().split(",")           #Leading and trailing whitespaces are removed with strip
+    res_row=("{},{},{},{},{}".format(splt[1], splt[2], get_pos(splt[0]), get_neg(splt[0]), (get_pos(splt[0])-get_neg(splt[0]))))
+    outfile.write(res_row)
+    outfile.write("\n")
+
+outfile.close()
+
+
+        
+    
